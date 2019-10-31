@@ -16,10 +16,9 @@ class TGeneratorReport
     public $type_relat;
     public $widths;
     public $position;
+    public $totals;
 
-
-
-	function __construct( $database, $active_record, $datagrid_columns, $form_title, $filters, $type_relat = 'pdf', $position = 'L', $widths = null )
+	function __construct( $database, $active_record, $datagrid_columns, $form_title, $filters, $type_relat = 'pdf', $position = 'L', $widths = null, $totals = null )
 	{
         $this->database = $database;
         $this->active_record = $active_record;
@@ -29,6 +28,7 @@ class TGeneratorReport
         $this->type_relat = $type_relat;
         $this->position = $position;
         $this->widths = $widths;
+        $this->totals = $totals;
 
         $this->onGenerate( $type_relat );
 
@@ -39,15 +39,11 @@ class TGeneratorReport
     {
         try
         {
-            // $filters = $this->getFilters();
-            // $filters = $this->onSearch( false );
             $filters = $this->filters;
-            // open a transaction with database 'small_erp'
-            // TTransaction::open(self::$database);
+            // open a transaction with database
             TTransaction::open($this->database);
             $param = [];
             // creates a repository for Pessoa
-            // $repository = new TRepository(self::$activeRecord);
             $repository = new TRepository( $this->active_record );
             // creates a criteria
             $criteria = new TCriteria;
@@ -70,18 +66,21 @@ class TGeneratorReport
 
             if ($objects)
             {
-                // $colunas_datagrid = $this->datagrid->getColumns();
                 $colunas_datagrid = $this->datagrid_columns;
-                // $widths = array(200,200,200,200,200,200,200,200,200,200); // Largura das colunas no relatório :: Pegar da Listagem
-                // $widths = array_fill(0,count($colunas_datagrid),200); // Largura das colunas no relatório :: Pegar da Listagem
-                // $widths = [28, 89, 334, 91, 58, 41, 56, 45, 124, 92]; // Largura das colunas no relatório :: Pegar da Listagem
-                // $widths = [89, 334, 91, 58, 41, 56, 45, 124, 92]; // Largura das colunas no relatório :: Pegar da Listagem
 
                 if($this->widths){
                     $widths = $this->widths;
                 } else {
                     $widths = array_fill(0,count($colunas_datagrid),200); // Largura das colunas no relatório :: Pegar da Listagem
                 }
+
+                if($this->totals){
+                    $totals = $this->totals;
+                } else {
+                    $totals = array_fill(0,count($colunas_datagrid),false); // Largura das colunas no relatório :: Pegar da Listagem
+                }
+
+                $totals_sum = array_fill(0,count($colunas_datagrid),0);
 
                 switch ($format)
                 {
@@ -110,6 +109,7 @@ class TGeneratorReport
                 {
                     // create the document styles
                     $tr->addStyle('title', 'Helvetica', '10', 'B',   '#000000', '#dbdbdb');
+                    $tr->addStyle('filter', 'Arial', '6', '',    '#808080', '#f0f0f0');
                     $tr->addStyle('datap', 'Arial', '10', '',    '#333333', '#f0f0f0');
                     $tr->addStyle('datai', 'Arial', '10', '',    '#333333', '#ffffff');
                     // $tr->addStyle('header', 'Helvetica', '16', 'B',   '#5a5a5a', '#6B6B6B');
@@ -118,6 +118,7 @@ class TGeneratorReport
                     $tr->addStyle('footer', 'Helvetica', '10', 'B',  '#5a5a5a', '#ffffff');
                     $tr->addStyle('break', 'Helvetica', '10', 'B',  '#ffffff', '#9a9a9a');
                     $tr->addStyle('total', 'Helvetica', '10', 'I',  '#000000', '#c7c7c7');
+                    $tr->addStyle('total_final', 'Helvetica', '10', 'BI',  '#000000', '#c7c7c7');
                     $tr->addStyle('breakTotal', 'Helvetica', '10', 'I',  '#000000', '#c6c8d0');
 /*
                     // Pegando o nome do relatório
@@ -163,7 +164,8 @@ class TGeneratorReport
 
                                 if ($filter) {
                                     $pdf->Ln(20);
-                                    $pdf->SetFont('Arial','I',10);
+                                    // $pdf->SetFont('Arial','I',10);
+                                    $pdf->SetFont('Arial','I',6);
                                     $pdf->Cell(0,10, 'filtragem: ' . utf8_decode( $filter ) ,0,0,'R');
                                 }
 
@@ -205,7 +207,6 @@ class TGeneratorReport
                     else // Para os demais formatos
                     {
                          $tr->setHeaderCallback(
-                             // function($tr)
                             // function($tr, $arg1, $arg2)
                             function($tr)
                             {
@@ -220,13 +221,11 @@ class TGeneratorReport
                                 }
 
                                 $tr->addRow();
-                                // $tr->addCell('Customers', 'center', 'header', 5);
-                                // $tr->addCell($tr->arg1, 'center', 'header', count($tr->arg2));
                                 $tr->addCell($title, 'center', 'header', count($tr->arg2));
 
                                 if ($filter) {
                                     $tr->addRow();
-                                    $tr->addCell($filter, 'right', 'datap', count($tr->arg2));
+                                    $tr->addCell($filter, 'right', 'filter', count($tr->arg2));
                                 }
 
 
@@ -238,7 +237,6 @@ class TGeneratorReport
                             function($tr)
                             {
                                 $tr->addRow();
-                                // $tr->addCell(date('Y-m-d h:i:s'), 'center', 'footer', 5);
                                 $tr->addCell(date('Y-m-d h:i:s'), 'right', 'footer', count($tr->arg2));
                             }
                             , $report_title, $widths
@@ -267,16 +265,6 @@ class TGeneratorReport
 
                         $tr->addCell($label_column, 'left', 'title');
                     }
-                    // $tr->addCell("Id", 'left', 'title');
-                    // $tr->addCell("Nome", 'left', 'title');
-                    // $tr->addCell("Documento", 'left', 'title');
-                    // $tr->addCell("Telefone", 'left', 'title');
-                    // $tr->addCell("Email", 'left', 'title');
-                    // $tr->addCell("Estado", 'left', 'title');
-                    // $tr->addCell("Cidade", 'left', 'title');
-                    // $tr->addCell("Usuário", 'left', 'title');
-                    // $tr->addCell("Data de ativação", 'left', 'title');
-                    // $tr->addCell("Data de desativação", 'left', 'title');
 
                     $grandTotal = [];
                     $breakTotal = [];
@@ -285,6 +273,8 @@ class TGeneratorReport
 
                     // controls the background filling
                     $colour = false;
+
+                    // Iterate with objects returned by TRepository
                     foreach ($objects as $object)
                     {
                         $style = $colour ? 'datap' : 'datai';
@@ -309,16 +299,23 @@ class TGeneratorReport
                             $transformer = $coluna->getTransformer();
 
                             $content = $object->$name_column;
+
+                            // Check if anable SUM this column
+                            if ($totals[ $key ]) {
+                                if ($transformer) {
+                                    $value_process = call_user_func($transformer, $content, $object, null);
+                                    $totals_sum[ $key ] += gf::getNumberFromText( $value_process, true );
+                                } else {
+                                    $totals_sum[ $key ] += $content;
+                                }
+                            }
+
                             if ($transformer)
                             {
                                 // apply the transformer functions over the data
                                 // $content = call_user_func($transformer, $content, null, null);
                                 $content = call_user_func($transformer, $content, $object, null);
                             }
-                            // $cell->add($content);
-
-                            // $tr->addCell($object->$name_column, 'left', $style);
-                            // $tr->addCell($object->$name_column, $align_column, $style);
 
                             if ($format == 'pdf' || $format == 'rtf') {
                                 $content = filter_var( $content, FILTER_SANITIZE_STRING );
@@ -327,18 +324,22 @@ class TGeneratorReport
                             $tr->addCell($content, $align_column, $style);
                         }
 
-                        // $tr->addCell($object->id, 'left', $style);
-                        // $tr->addCell($object->nome, 'left', $style);
-                        // $tr->addCell($object->documento, 'left', $style);
-                        // $tr->addCell($object->fone, 'left', $style);
-                        // $tr->addCell($object->email, 'left', $style);
-                        // $tr->addCell($object->cidade->estado->nome, 'left', $style);
-                        // $tr->addCell($object->id, 'left', $style);
-                        // $tr->addCell($object->id, 'left', $style);
-                        // $tr->addCell($object->dt_ativacao, 'left', $style);
-                        // $tr->addCell($object->dt_desativacao, 'left', $style);
-
                         $colour = !$colour;
+                    }
+
+                    if ($totals) {
+
+                        $tr->addRow();
+
+                        foreach ($colunas_datagrid as $key => $coluna) {
+
+                            if ($totals[ $key ]) {
+                                // $tr->addCell( gf::numeroBR( $totals_sum[ $key ] ) , 'right', 'total');
+                                $tr->addCell( gf::numeroBR( $totals_sum[ $key ] ) , 'right', 'total_final');
+                            } else {
+                                $tr->addCell('', 'center', 'total');
+                            }
+                        }
                     }
 
                     $file = 'report_'.uniqid().".{$format}";
