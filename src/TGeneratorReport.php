@@ -17,6 +17,9 @@ class TGeneratorReport
     public $widths;
     public $position;
     public $totals;
+    public $order;
+
+
 
 	function __construct( $database, $active_record, $datagrid_columns, $form_title, $filters, $type_relat = 'pdf', $position = 'L', $widths = null, $totals = null )
 	{
@@ -29,6 +32,7 @@ class TGeneratorReport
         $this->position = $position;
         $this->widths = $widths;
         $this->totals = $totals;
+        $this->order = $order;
 
         $this->onGenerate( $type_relat );
 
@@ -43,6 +47,13 @@ class TGeneratorReport
             // open a transaction with database
             TTransaction::open($this->database);
             $param = [];
+
+            if ($this->order) {
+                $param['order'] = $this->order['order'];
+                if (isset($this->order['direction'])) {
+                    $param['direction'] = $this->order['direction'];
+                }
+            }
             // creates a repository for Pessoa
             $repository = new TRepository( $this->active_record );
             // creates a criteria
