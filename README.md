@@ -174,6 +174,9 @@ I use it inside general functions class, but use it where you want or need.
 
 ```
 
+... this is incomplete README.md, because it's only for me use
+
+<!--
 A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
 
 _For more examples and usage, please refer to the [Wiki][wiki]._
@@ -225,3 +228,4 @@ Distributed under the XYZ license. See ``LICENSE`` for more information.
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
 [wiki]: https://github.com/yourname/yourproject/wiki
+-->
