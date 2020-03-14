@@ -6,7 +6,11 @@
  * @author     Pablo Dall'Oglio
  * @copyright  Copyright (c) 2006 Adianti Solutions Ltd. (http://www.adianti.com.br)
  * @license    http://www.adianti.com.br/framework-license
+ *
+ * Modify by
+ * Leonam, Carlos (https://github.com/carlosleonam)
  */
+
 class TTableWriterRTFSis implements ITableWriter
 {
     private $rtf;
