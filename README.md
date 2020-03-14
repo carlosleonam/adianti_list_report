@@ -1,5 +1,5 @@
 # Generator Report ( html, pdf, rtf ) for Adianti in TDatagrid
-> Short blurb about what your product does.
+> Generate report direct from TDatagrid
 
 <!-- [![NPM Version][npm-image]][npm-url] -->
 <!-- [![Build Status][travis-image]][travis-url] -->
