@@ -191,5 +191,10 @@ trait TGeneratorReportTrait
 
     }
 
+    public function onSearchToSession()
+    {
+        return TSession::getValue(__CLASS__.'_filters');
+    }
+
 
 }
