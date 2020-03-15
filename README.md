@@ -1,9 +1,10 @@
 # Generator Report ( html, pdf, rtf ) for Adianti in TDatagrid
 > Generate report direct from TDatagrid
-
-<!-- [![NPM Version][npm-image]][npm-url] -->
-<!-- [![Build Status][travis-image]][travis-url] -->
-<!-- [![Downloads Stats][npm-downloads]][npm-url] -->
+<!--
+[![NPM Version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Downloads Stats][npm-downloads]][npm-url]
+-->
 
 What is it? Simple! This is a extended classes from Adianti reports, for using inside TDatagrid class.
 
@@ -31,36 +32,49 @@ cd \app\lib
 md sislib // or witchever you prefer
 ```
 
+**Adianti Builder:**
+
+Pressumed that you has knowleadge how Builder works. So, got ahead:
+
+With previous download zip file with package, descompact in local computer folder. The idea is to create same classes inside your Builder project
+
+
+
 ### Composer:
+> Remember, Adianti Framework has a particular method to load your builtin classes. Cause of that, the installation of this generator has following the above passes.
 
 A little bit more complex, but it works:
 
-Insert this below lines in appropriate local in your compose.json (**please, remember backup you "composer.json" file before!**)
+Insert this below lines, in appropriate local, inside your compose.json (**please, remember backup you "composer.json" file before!**)
 
 ```sh
 {
-  "repositories": [
-    {
-      "name": "carlosleonam/listreport",
-      "type": "git",
-       "url": "https://github.com/carlosleonam/listreport"
-    }
-  ],
-    "require": {
-    "carlosleonam/listreport": "dev-master"
-    },
+    "repositories": [
+       { "type": "git", "url": "https://github.com/carlosleonam/listreport" }
+    ],
+
+
     "extra": {
-      "installer-paths":{
+        "installer-paths":{
         "app/lib/sislib/": ["carlosleonam/listreport"]
         }
     }
 }
+```
 
+After that, install package for personalize install directory:
+
+```sh
+composer require mnsami/composer-custom-directory-installer
+```
+
+And finally, install our package:
+```sh
+composer require carlosleonam/adianti_list_report
 ```
 
 ## Usage example
 
-Remember, Adianti Framework has a particular method to load your builtin classes. Cause of that, the installation of this generator has following the above passes.
 
 ### In your class that has TDatagrid inside it
 
@@ -97,7 +111,6 @@ Remember, Adianti Framework has a particular method to load your builtin classes
             $array_totals                                       // column to get total (the last is default)
         );
     }
-
 ```
 
 For PDF and RTF, its similar.
@@ -147,7 +160,6 @@ For PDF and RTF, its similar.
         }
 
     }
-
 ```
 
 **Function to save cookies for TDatagrid**
@@ -171,7 +183,6 @@ I use it inside general functions class, but use it where you want or need.
 
         return $result;
     }
-
 ```
 
 ... this is incomplete README.md, because it's only for me use

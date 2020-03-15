@@ -303,7 +303,7 @@ class TGeneratorReport
                             if ($totals[ $key ]) {
                                 if ($transformer) {
                                     $value_process = call_user_func($transformer, $content, $object, null);
-                                    $totals_sum[ $key ] += gf::getNumberFromText( $value_process, true );
+                                    $totals_sum[ $key ] += self::getNumberFromText( $value_process, true );
                                 } else {
                                     $totals_sum[ $key ] += $content;
                                 }
@@ -333,7 +333,7 @@ class TGeneratorReport
                         foreach ($colunas_datagrid as $key => $coluna) {
 
                             if ($totals[ $key ]) {
-                                $tr->addCell( gf::numeroBR( $totals_sum[ $key ] ) , 'right', 'total_final');
+                                $tr->addCell( self::numberBR( $totals_sum[ $key ] ) , 'right', 'total_final');
                             } else {
                                 $tr->addCell('', 'center', 'total');
                             }
@@ -375,5 +375,47 @@ class TGeneratorReport
             TTransaction::rollback();
         }
     }
+
+
+	/**
+     * method numberBR()
+     * receives a number, can be float, English type
+     * and turns it into a Brazilian type number (ex. 1.524,36)
+     * @param $num string with number to transform
+     * @returns string return formated value
+     */
+    public static function numberBR($num, $decimal = 2)
+    {
+        if($num)
+        {
+            return number_format($num, $decimal, ',', '.');
+        }
+    }
+
+    /**
+     * Extract number from text
+     *
+     * @param [type] $text
+     * @param boolean $signals
+     * @return void
+     */
+    public static function getNumberFromText($text, $signals = false)
+    {
+		$text_value = $text;
+		if ($signals) {
+			preg_match('/[+-]{0,1}\d*\.?\d*\.?\d*\.?\d+,\d+/', $text_value, $matches );
+		} else {
+			preg_match('/\d*\.?\d*\.?\d*\.?\d+,\d+/', $text_value, $matches );
+		}
+
+        if (count($matches) === 0) {
+            $text_value = 0;
+        } else {
+            $text_value = $matches[0];
+        }
+
+    	return floatval( GeneralFunctions::numeroUS( $text_value ) );
+    }
+
 
 }
