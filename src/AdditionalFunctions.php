@@ -39,32 +39,6 @@ class AdditionalFunctions
         }
     }
 
-    /**
-     * Extract number from text
-     *
-     * @param [type] $text
-     * @param boolean $signals
-     * @return void
-     */
-    public static function getNumberFromText($text, $signals = false)
-    {
-		$text_value = $text;
-		if ($signals) {
-			preg_match('/[+-]{0,1}\d*\.?\d*\.?\d*\.?\d+,\d+/', $text_value, $matches );
-		} else {
-			preg_match('/\d*\.?\d*\.?\d*\.?\d+,\d+/', $text_value, $matches );
-		}
-
-        if (count($matches) === 0) {
-            $text_value = 0;
-        } else {
-            $text_value = $matches[0];
-        }
-
-    	return floatval( AdditionalFunctions::numberUS( $text_value ) );
-    }
-
-
 
     /**
      * method numberUS()
