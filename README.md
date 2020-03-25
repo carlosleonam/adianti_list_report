@@ -37,16 +37,21 @@ md sislib // or witchever you prefer
 
 **Adianti Builder:**
 
-Pressumed that you has knowleadge how Builder works. So, got ahead:
+Presumed that you had knowledge how Builder works. So, go ahead::
 
 With previous download zip file with package, descompact in local computer folder. The idea is to create same classes inside your Builder project
 
 
 
 ### Composer:
-> Remember, Adianti Framework has a particular method to load your builtin classes. Cause of that, the installation of this generator has following the above passes.
+> Remember, Adianti Framework has a particular method to load your built in classes. Cause of that, the installation of this generator has following the below passes.
 
-A little bit more complex, but it works:
+A little bit more complex, but it works.
+
+Before use it, run this command to add in your composer the package (https://github.com/mnsami/composer-custom-directory-installer):
+```sh
+composer require mnsami/composer-custom-directory-installer
+```
 
 Insert this below lines, in appropriate local, inside your compose.json (**please, remember backup you "composer.json" file before!**)
 
@@ -127,7 +132,7 @@ And, before end of __construct method, insert this lines:
 
 Now, before update Composer ou download in appropriate folder (app/lib/sislib/src), reload your class and enjoy.
 
-... this is incomplete README.md, because it's only for me use. I'll try make better docs when I'll have time. Sorry!
+... this is an incomplete README.md, because it's only for me use. I'll try make better doc when I'll have time. Sorry for that, and my bad english too! Bye!
 
 <!--
 A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
