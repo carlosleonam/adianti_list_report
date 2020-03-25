@@ -47,7 +47,7 @@ With previous download zip file with package, descompact in local computer folde
 > Remember, Adianti Framework has a particular method to load your built in classes. Cause of that, the installation of this generator has following the below passes.
 
 A little bit more complex, but it works.
-<!-- 
+<!--
 Before use it, run this command to add in your composer the package (https://github.com/mnsami/composer-custom-directory-installer):
 ```sh
 composer require mnsami/composer-custom-directory-installer
@@ -103,13 +103,16 @@ class MyClass extends TPage
     private $showMethods = ['onReload', 'onSearch'];
 
     #------[ BEGIN CODE TO INSERT ]---------------------------------
+
     // Number of buttons column's
     private static $buttons_columns = 1;
     // Array of position of columns that has total
     private static $columns_with_total = [6];
     // Trait to HTML, PDF, RTF and XLS
     use TGeneratorReportTrait;
+
     #------[ /END CODE TO INSERT  ]---------------------------------
+
     /**
      * Class constructor
      * Creates the page, the form and the listing
@@ -119,14 +122,14 @@ class MyClass extends TPage
 And, before end of __construct method, insert this lines:
 
 ```php
-
         #------[ BEGIN CODE TO INSERT ]---------------------------------
+
         include_once('app/lib/sislib/src/ReportButtons.php');
         include_once('app/lib/sislib/src/tdatagrid_colwidth.php');
+
         #------[ /END CODE TO INSERT  ]---------------------------------
 
         parent::add($container);
-
     }
 ```
 
