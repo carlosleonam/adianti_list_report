@@ -12,7 +12,7 @@ What is it? Simple! This is a extended classes from Adianti reports, for using i
 We use this hack to get current columns width to adapt report for best preview, and use cookies for that.
 >Usamos esse hack para obter a largura atual das colunas para adaptar o relatório para a melhor visualização e usamos cookies para isso.
 
-![](header.png)
+![](github_cover.jpg)
 
 ## **Installation**
 
