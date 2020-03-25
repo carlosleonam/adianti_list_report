@@ -9,7 +9,7 @@
 TScript::create("
 var arrOfTable = [],
     i = 0;
-$('[id^=\"tdatagrid_\"] tr:nth-child(2) td').each(function () {
+$('[id^=\"tdatagrid_\"] tr:nth-child(1) td').each(function () {
     mWid = $(this).width();
     arrOfTable.push(mWid);
 });
