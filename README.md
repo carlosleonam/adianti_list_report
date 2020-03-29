@@ -18,30 +18,43 @@ We use this hack to get current columns width to adapt report for best preview, 
 
 ### **Download:**
 
-Download lastest release, and extract to a subdir in 'app/lib', like 'sislib' or whatever you want.
-
+Download latest release, and extract to a subdir in 'app/lib', like 'sislib' or whatever you want (making code changes).
+>Faça o download da versão mais recente e extraia para um subdiretório em 'app/lib', como 'sislib' ou o que quiser (fazendo os ajustes no código).
 
 **Linux:**
 
 ```sh
 cd /app/lib
-mkdir sislib // or witchever you prefer (but make manual adapter on source code)
+mkdir sislib     // or witchever you prefer (but make manual adapter on source code)
+mkdir sislib/src // or witchever you prefer (but make manual adapter on source code)
 ```
 
 **Windows:**
 
 ```sh
 cd \app\lib
-md sislib // or witchever you prefer
+md sislib       // or witchever you prefer (but make manual adapter on source code)
+md sislib/src   // or witchever you prefer (but make manual adapter on source code)
 ```
 
-**Adianti Builder:**
+**Adianti Builder**
+Hosted localhost code:
 
-Presumed that you had knowledge how Builder works. So, go ahead::
+Presumed that you had knowledge how Builder works. So, go ahead:
+>Presume-se que você tenha conhecimento de como o Builder funciona. Então vá em frente:
 
-With previous download zip file with package, descompact in local computer folder. The idea is to create same classes inside your Builder project
+With previous download package zip file, descompact in local computer folder, inside 'app/lib/sislib/src'. The idea is to create same classes inside your Builder project.
+>Com o arquivo zip do pacote de download anterior, descompacte na pasta do computador local, dentro de 'app/lib/sislib/src'. A ideia é criar as mesmas classes dentro do seu projeto Builder
 
+**Builder online test:**
 
+![](list-report-builder.jpg)
+
+Simple to do, just mirror all classes within the Builder, creating "new-code" with the name of each class, and paste (overlapping everything!) The content of each one within the created class.
+>Simples de fazer, basta espelhar todas as classes dentro do Builder, criando "novo-codigo" com o nome de cada classe, e colar (sobrepondo tudo!) o conteúdo de cada uma dentro da classe criada.
+
+![](list-report-builder-2.jpg)
+Result after make a search, because it's obrigatory (exists a alert with Sweet alert, but )
 
 ### Composer:
 > Remember, Adianti Framework has a particular method to load your built in classes. Cause of that, the installation of this generator has following the below passes.
@@ -53,8 +66,8 @@ Before use it, run this command to add in your composer the package (https://git
 composer require mnsami/composer-custom-directory-installer
 ```
  -->
-Insert this below lines, in appropriate local, inside your compose.json (**please, remember backup you "composer.json" file before!**)
-
+Insert this below lines, in appropriate local, inside your composer.json (**please, remember backup you "composer.json" file before!**)
+>Insira as linhas abaixo, no local apropriado, dentro do seu composer.json (** lembre-se de fazer backup do arquivo "composer.json" antes! **)
 ```sh
 {
     "repositories": [
@@ -71,22 +84,31 @@ Insert this below lines, in appropriate local, inside your compose.json (**pleas
 ```
 
 After that, install package for personalize install directory:
-
+>Depois disso, instale o pacote para personalizar o diretório de instalação:
 ```sh
 composer require mnsami/composer-custom-directory-installer
 ```
 
+This to use SweetAlert2 messages:
+>Isso para usar as mensagens SweetAlert2:
+```sh
+composer require varunsridharan/sweetalert2-php
+```
+
 And finally, install our package:
+>E finalmente, instale nosso pacote:
 ```sh
 composer require carlosleonam/adianti_list_report
 ```
 
 ## Usage example
-
+>Exemçlo de uso
 
 ### In your class that has TDatagrid inside it
+>Na sua classe que tem TDatagrid dentro dele
 
 Insert this below code in appropriate place in your class (in general, before __construct method). See example:
+>Insira este código abaixo no local apropriado da sua classe (em geral, antes do método __construct). Consultar exemplo:
 
 ```php
 class MyClass extends TPage
@@ -120,6 +142,7 @@ class MyClass extends TPage
 ```
 
 And, before end of __construct method, insert this lines:
+>E, antes do final do método __construct, insira estas linhas:
 
 ```php
         #------[ BEGIN CODE TO INSERT ]---------------------------------
@@ -133,9 +156,11 @@ And, before end of __construct method, insert this lines:
     }
 ```
 
-Now, before update Composer ou download in appropriate folder (app/lib/sislib/src), reload your class and enjoy.
+Now, after Composer has been updated or downloaded to the appropriate folder (app/lib/sislib/src), reload your class and enjoy.
+>Agora, após a atualização ou o download do Composer para a pasta apropriada (app/lib/sislib/src), recarregue sua classe e aproveite.
 
-... this is an incomplete README.md, because it's only for me use. I'll try make better doc when I'll have time. Sorry for that, and my bad english too! Bye!'
+... this is an incomplete README.md file, because it is just for me or someone who needs it. I will try to make a better document when I have time. Sorry about that, and my bad English too! Bye!
+>... este é um arquivo README.md incompleto, porque é apenas para mim ou para alguém que precise dele. Vou tentar fazer um documento melhor quando tiver tempo. Desculpe por isso, e meu inglês ruim também! Tchau!'
 
 <!--
 A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
